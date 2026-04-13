@@ -1,11 +1,14 @@
 const cases = document.querySelectorAll('.case');
 const next = document.querySelector('.next');
 const prev = document.querySelector('.prev');
+const track = document.querySelector('.cases__track');
 
 let index = 0;
+let startX = 0;
+let endX = 0;
 
 function showCase(i) {
-  cases.forEach(c => c.classList.remove('active'));
+  cases.forEach((item) => item.classList.remove('active'));
   cases[i].classList.add('active');
 }
 
@@ -74,11 +77,6 @@ form?.addEventListener('submit', async (e) => {
   }
 });
 
-const track = document.querySelector('.cases__track');
-
-let startX = 0;
-let endX = 0;
-
 track.addEventListener('touchstart', (e) => {
   startX = e.touches[0].clientX;
 });
@@ -91,13 +89,11 @@ track.addEventListener('touchend', (e) => {
 function handleSwipe() {
   const diff = startX - endX;
 
-  if (Math.abs(diff) < 50) return; // защита от случайного свайпа
+  if (Math.abs(diff) < 30) return;
 
   if (diff > 0) {
-    // свайп влево → следующий
     index = (index + 1) % cases.length;
   } else {
-    // свайп вправо → предыдущий
     index = (index - 1 + cases.length) % cases.length;
   }
 
